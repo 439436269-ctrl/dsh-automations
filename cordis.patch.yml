@@ -1,0 +1,8 @@
+# Bundle patch: one row. The profile layer may override this `config` block
+# (patch replaces the whole object, not a deep merge).
+- insert:
+    - id: dsh-automations
+      name: dsh-automations
+      config:
+        enabled: true
+        startupDelayMs: 2000

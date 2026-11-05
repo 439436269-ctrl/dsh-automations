@@ -1,0 +1,76 @@
+{
+  "name": "dsh-automations",
+  "version": "0.1.0",
+  "description": "Lifecycle and event driven automations for DeepSeek Harness: run a command, an HTTP request or a log entry when DSH boots, a session starts, ends or goes idle, a message arrives, a tool finishes, or on a daily/interval schedule.",
+  "type": "module",
+  "license": "MIT",
+  "author": "439436269-ctrl",
+  "homepage": "https://github.com/439436269-ctrl/dsh-automations#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/439436269-ctrl/dsh-automations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/439436269-ctrl/dsh-automations/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "automation",
+    "lifecycle",
+    "hooks",
+    "trigger",
+    "自动化"
+  ],
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-system-prompt": "^0.2.0-rc.2",
+    "@deepseek-ai/dsh-tools": "^0.2.0-rc.2"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-locale"
+      ],
+      "platform": "web"
+    },
+    "compatibility": {
+      "dshReleases": {
+        "0.2.0-rc.2": "compatible",
+        "0.2.1-rc.3": "compatible"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "node test/selftest.mjs"
+  }
+}
