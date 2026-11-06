@@ -1,6 +1,6 @@
 {
   "name": "dsh-automations",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lifecycle and event driven automations for DeepSeek Harness: run a command, an HTTP request or a log entry when DSH boots, a session starts, ends or goes idle, a message arrives, a tool finishes, or on a daily/interval schedule.",
   "type": "module",
   "license": "MIT",

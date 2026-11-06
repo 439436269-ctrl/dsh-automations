@@ -41,7 +41,7 @@
 
 | 类型 | 做什么 | 说明 |
 |---|---|---|
-| `shell` | 起一个**非交互**子进程 | `command`、`cwd`、`shell`（`auto`/`powershell`/`cmd`/`bash`）、`timeoutMs`。捕获 stdout+stderr 尾部与退出码；超时会杀掉整个进程树 |
+| `shell` | 起一个**非交互**子进程 | `command`、`cwd`、`shell`（`auto`/`powershell`/`cmd`/`bash`）、`timeoutMs`。捕获 stdout+stderr 尾部与退出码；超时会杀掉整个进程树。**`cwd` 留空 = `defaultCwd`（默认用户主目录）** |
 | `http` | 发一个 HTTP 请求 | `url`、`method`、`headers`（JSON 对象字符串）、`body`、`timeoutMs`。适合 webhook、飞书机器人、本地探活 |
 | `log` | 只写一条运行记录 | 无副作用，用来验证「时机到底有没有命中」 |
 
@@ -62,10 +62,12 @@ DSH_AUTOMATION_CONTEXT     一行 JSON（kind/sessionId/tool/source/at）
 
 ## 3. 面板
 
-- 左栏图标 → 主区页面：统计条、规则卡片（启停 / 运行 / 编辑 / 删除）、最近运行（点开看输出）。
-- 「新建规则」用同一份 **catalog** 动态生成表单：选触发时机后只出现相关字段，换动作同理。
+- 左栏图标 → 主区页面：统计条 + **「规则 / 运行」两个 tab**。
+- **规则** tab：规则卡片（启停 / 运行 / 编辑 / 删除）；空面板时给三个模板（启动写日志、每天 08:30 探活、会话空闲记录）。
+- **运行** tab：完整运行历史（时间 / 规则 / 触发类型 / 状态 / 耗时），点一行展开输出，展开头部带触发与退出码。
+- tab 选择记在 `localStorage`，刷新后停在上次那个 tab。
+- 「新建规则」用同一份 **catalog** 动态生成表单：选触发时机后只出现相关字段，换动作同理；shell 规则的**工作目录会预填默认路径**（见下节）。
 - 「试运行」不保存也能执行一次，便于调命令。
-- 首次使用提供三个模板：启动写日志、每天 08:30 探活、会话空闲记录。
 
 界面文案跟随 DSH 的语言（中文 / English）。
 
@@ -104,6 +106,7 @@ $DSH_HOME/storages/dsh-automations/
     maxRunHistory: 200
     maxOutputChars: 8000
     defaultTimeoutMs: 120000
+    defaultCwd: ""            # shell 规则的默认工作目录；空 = 用户主目录
     startupDelayMs: 2000
     tickSeconds: 15
     promptEnabled: true

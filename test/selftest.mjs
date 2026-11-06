@@ -6,11 +6,12 @@
 import assert from "node:assert/strict";
 import { mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { createActions } from "../lib/actions.js";
 import { createEngine } from "../lib/engine.js";
+import { buildView } from "../lib/http.js";
 import { normalizeAction, normalizeRule, normalizeTrigger, RuleError, summarizeTrigger } from "../lib/model.js";
 import { resolveConfig } from "../lib/settings.js";
 import { createStore } from "../lib/store.js";
@@ -158,6 +159,27 @@ await check("engine times out a hanging command", async () => {
 	});
 	const run = await engine.submit(rule, { kind: "manual" }, { force: true });
 	assert.equal(run.status, "timeout", `expected timeout, got ${run.status}: ${run.error ?? ""}`);
+});
+
+await check("shell defaults to the user home when cwd is empty", async () => {
+	const settings = resolveConfig({ maxOutputChars: 2000 });
+	const actions = createActions({ settings });
+	const action = process.platform === "win32"
+		? { type: "shell", command: "cd", shell: "cmd", timeoutMs: 10000 }
+		: { type: "shell", command: "pwd", shell: "bash", timeoutMs: 10000 };
+	const run = await actions.run(action, { ruleId: "cwd", ruleName: "cwd", triggerType: "manual" });
+	assert.equal(run.status, "ok", run.error ?? "");
+	const expected = homedir().replace(/\\/g, "\\");
+	assert.ok(run.output.toLowerCase().includes(expected.toLowerCase()), `expected ${expected} in ${run.output}`);
+});
+
+await check("panel view exposes the default working directory", () => {
+	const settings = resolveConfig({});
+	const store = { dir: "x", list: () => [], listRuns: () => [] };
+	const view = buildView({ store, engine: { busy: () => 0 }, hub: { bootedAt: "2026-01-01T00:00:00.000Z" }, settings });
+	assert.equal(view.defaultCwd, homedir());
+	const custom = buildView({ store, engine: { busy: () => 0 }, hub: { bootedAt: "x" }, settings: resolveConfig({ defaultCwd: "D:\\work" }) });
+	assert.equal(custom.defaultCwd, "D:\\work");
 });
 
 await check("engine performs an HTTP action", async () => {
