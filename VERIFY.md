@@ -6,9 +6,9 @@
 
 | 项 | 值 |
 |---|---|
-| npm | `dsh-automations@0.2.0`（2026-11-06，`latest`） |
-| npm shasum | `c6aaf18a6f2df6a0994cdd832c1b82b7ff22178c` |
-| npm integrity | `sha512-rP8giQiB80wYMJSDPbeztmRAvvjP6ByUsr4aOL3YaCM0KSXQFqjBMHkmPkioXKdtfJ8VEl2zWxFJUaxQ/rZZ0w==` |
+| npm | `dsh-automations@0.2.1`（2026-11-07，兼容 DSH 0.2.1-rc.1 / 0.2.2-rc.1；0.2.0 为首个双 tab 版） |
+| npm shasum | `52b2bce1f4075130405f25285e369d5fcf61d3f4`（0.2.1） |
+| npm integrity | `sha512-vFj/+pTxPrKdNO1Pi1DumxDt0ZReNU8H9zIN1V/ukrQ8oxJ2cK6ntKLQ5DMZO5sswFFmkn6FeG6BsINaKEFoAg==`（0.2.1） |
 | GitHub | `439436269-ctrl/dsh-automations`，tag `v0.1.0` / `v0.2.0` |
 | CI | `ci #1`（2d79c71）、`ci #2`（ddfd5a5）均 success，Node 22/24 矩阵 |
 | 市场 | `awesome-dsh-plugin` PR #12792（已合并；`check` 与 `Submission gate` 均 success） |
