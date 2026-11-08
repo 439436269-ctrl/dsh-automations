@@ -11,6 +11,7 @@
 | npm integrity | `sha512-rP8giQiB80wYMJSDPbeztmRAvvjP6ByUsr4aOL3YaCM0KSXQFqjBMHkmPkioXKdtfJ8VEl2zWxFJUaxQ/rZZ0w==` |
 | GitHub | `439436269-ctrl/dsh-automations`，tag `v0.1.0` / `v0.2.0` |
 | CI | `ci #1`（2d79c71）、`ci #2`（ddfd5a5）均 success，Node 22/24 矩阵 |
+| 市场 | `awesome-dsh-plugin` PR #12792（已合并；`check` 与 `Submission gate` 均 success） |
 
 ## 离线自检
 
